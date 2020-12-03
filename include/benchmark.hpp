@@ -21,11 +21,11 @@
 #include <iostream>
 #include <chrono>
 
+#include "mark.hpp"
+
 namespace bm {
 
-template < class Clock,
-           class Rep    = typename Clock::rep,
-           class Period = typename Clock::period >
+template < class Clock >
 class GenericBench
 {
 public:
@@ -35,8 +35,6 @@ public:
     template< bool B, class T = void >
     using enable_if_type = typename std::enable_if<B, T>::type;
 
-    using duration_type = std::chrono::duration<Rep, Period>;
-
 public:
     GenericBench() = delete;
 
@@ -44,29 +42,29 @@ public:
     template < class Func, class... Args >
     static auto mark(Func&& func, Args&&... args)
         -> enable_if_type< std::is_void<result_type<Func&&(Args&&...)>>::value,
-                           duration_type >
+                           Mark >
     {
         auto before = Clock::now();
         std::forward<Func>(func)(std::forward<Args>(args)...);
         auto after = Clock::now();
-        return std::chrono::duration_cast<duration_type>(after - before);
+        return Mark(after - before);
     }
 
     template < class Func, class... Args >
     static auto mark(Func&& func, Args&&... args)
         -> enable_if_type< !std::is_void<result_type<Func&&(Args&&...)>>::value,
-                           std::pair<duration_type, result_type<Func&&(Args&&...)>> >
+                           std::pair<Mark, result_type<Func&&(Args&&...)>> >
     {
         auto before = Clock::now();
         auto result = std::forward<Func>(func)(std::forward<Args>(args)...);
         auto after = Clock::now();
-        auto duration = std::chrono::duration_cast<duration_type>(after - before);
-        return std::make_pair(duration, result);
+        auto mark = Mark(after - before);
+        return std::make_pair(mark, result);
     }
 };
 
 using Bench = GenericBench<std::chrono::steady_clock>;
 
-} // namespace
+} // namespaces
 
 #endif // BENCHMARK_BENCHMARK_HPP

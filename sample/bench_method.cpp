@@ -52,7 +52,7 @@ int main()
 
     Configuration config;
     auto result = Bench::mark(std::mem_fn(&Configuration::Load), &config, input);
-    std::cout << "Took " << result.first.count() << "ns" << std::endl;
+    std::cout << result.first << std::endl;
     std::cout << "Success = " << result.second << std::endl;
     return 0;
 }
