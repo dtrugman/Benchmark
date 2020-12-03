@@ -42,7 +42,7 @@ int main()
 {
     std::string input("./sample/lipsum.txt");
     auto result = Bench::mark(count_words, input);
-    std::cout << "Took " << result.first.count() << "ns" << std::endl;
+    std::cout << result.first << std::endl;
     std::cout << "Retval = " << result.second << std::endl;
     return 0;
 }

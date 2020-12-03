@@ -24,7 +24,7 @@ using namespace bm;
 int main()
 {
     std::string input("./sample/lipsum.txt");
-    auto duration = Bench::mark([input]() { std::ifstream fin(input, std::ios::binary); });
-    std::cout << "Took " << duration.count() << "ns" << std::endl;
+    auto mark = Bench::mark([input]() { std::ifstream fin(input, std::ios::binary); });
+    std::cout << mark << std::endl;
     return 0;
 }
