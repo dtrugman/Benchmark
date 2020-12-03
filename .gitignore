@@ -1,0 +1,36 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Compiled Executables
+out/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+
+# MacOS fs
+.DS_Store
