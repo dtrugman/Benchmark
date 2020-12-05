@@ -12,3 +12,5 @@ add_executable (bench_void_function sample/bench_void_function.cpp)
 add_executable (bench_function sample/bench_function.cpp)
 add_executable (bench_method sample/bench_method.cpp)
 add_executable (probe_method sample/probe_method.cpp)
+
+add_executable (test test/main.cpp)
