@@ -22,6 +22,7 @@
 #include <chrono>
 
 #include "mark.hpp"
+#include "thread_clock.hpp"
 
 namespace bm {
 
@@ -91,6 +92,10 @@ public:
 };
 
 using Bench = GenericBench<std::chrono::steady_clock>;
+
+#ifdef BENCHMARK_THREAD_CPUTIME
+    using Thread = GenericBench<thread_clock>;
+#endif // BENCHMARK_THREAD_CPUTIME
 
 } // namespaces
 
