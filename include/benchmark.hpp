@@ -39,6 +39,33 @@ public:
     GenericBench() = delete;
 
 public:
+    class Probe
+    {
+    public:
+        Probe(Mark & mark) :
+            _done(false), _mark(mark), _start(Clock::now()) {}
+        ~Probe() { done(); }
+
+        void done()
+        {
+            if (_done) return;
+
+            _done = true;
+            _stop = Clock::now();
+            _mark += (_stop - _start);
+        }
+
+    private:
+        using timepoint = typename Clock::time_point;
+
+    private:
+        bool      _done;
+        Mark &    _mark;
+        timepoint _start;
+        timepoint _stop;
+    };
+
+public:
     template < class Func, class... Args >
     static auto mark(Func&& func, Args&&... args)
         -> enable_if_type< std::is_void<result_type<Func&&(Args&&...)>>::value,
